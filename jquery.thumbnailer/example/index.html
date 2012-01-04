@@ -1,0 +1,88 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+  <title>Example</title>
+  <link rel="stylesheet" type="text/css" href="style.css"/>
+
+  <link rel="stylesheet" type="text/css" href="../jquery.thumbnailer.css"/>
+  <script type="text/javascript" src="../js/jquery-1.5.1.min.js"></script>
+  <script type="text/javascript" src="../jquery.thumbnailer.js"></script>
+  <script type="text/javascript">
+  <!--
+    $(document).ready(function(){
+        $('.thumbnailwrapper').thumbnailer({
+            zoom: 1,
+            captions: 1,
+            scrollThumbs: 1
+        });
+    });
+  -->
+  </script>
+</head>
+
+<body>
+<div id="pagewrapper" class="clearfix">
+    <div class="thumbnailwrapper">
+        <a class="imagemain" href="images/pic1_large.jpg">
+            <img src="images/pic1_med.jpg" alt="Sad robot"/>
+        </a>
+        <div class="imagethumbs">
+            <ul>
+                <li><a href="images/pic1_large.jpg" rel="images/pic1_med.jpg"><img src="images/pic1_thumb.jpg" alt="Sad robot"/></a></li>
+                <li><a href="images/pic2_large.jpg" rel="images/pic2_med.jpg"><img src="images/pic2_thumb.jpg" alt="Damaged frog"/></a></li>
+                <li><a href="images/pic5_large.jpg" rel="images/pic5_med.jpg"><img src="images/pic5_thumb.jpg" alt="Fear the mummy"/></a></li>
+                <li><a href="images/pic3_large.jpg" rel="images/pic3_med.jpg"><img src="images/pic3_thumb.jpg" alt="Penguiiiins"/></a></li>
+                <li><a href="images/pic4_large.jpg" rel="images/pic4_med.jpg"><img src="images/pic4_thumb.jpg" alt="Kenny the counting kangaroo"/></a></li>
+                <li><a href="images/pic6_large.jpg" rel="images/pic6_med.jpg"><img src="images/pic6_thumb.jpg" alt="Red thing of strangeness"/></a></li>
+                <li><a href="images/pic7_large.jpg" rel="images/pic7_med.jpg"><img src="images/pic7_thumb.jpg" alt="Three little robots out to see the world for themselves"/></a></li>
+            </ul>
+        </div>
+    </div>
+
+    <h1>jquery thumbnail plugin example page</h1>
+    <p>Make sure to read the integration instructions and remember to <a href="http://www.jquery.com">download jquery</a>. Here's <a href="javascript:var%20firebug=document.createElement('script');firebug.setAttribute('src','http://getfirebug.com/releases/lite/1.2/firebug-lite-compressed.js');document.body.appendChild(firebug);(function(){if(window.firebug.version){firebug.init();}else{setTimeout(arguments.callee);}})();void(firebug);">Firebug</a> in case you need it.</p>
+    <p>Options for the plugin are:</p>
+
+    <table>
+    <tr>
+        <th>Option</th>
+        <th>Values</th>
+        <th>Default</th>
+        <th>Desc</th>
+    </tr>
+    <tr>
+        <td>zoom</td>
+        <td>0 (off), 1 (on)</td>
+        <td>off</td>
+        <td>enables the zoom when mouse hover on main image</td>
+    </tr>
+    <tr>
+        <td>captions</td>
+        <td>0 (off), 1 (on)</td>
+        <td>off</td>
+        <td>enables captions on main image</td>
+    </tr>
+    <tr>
+        <td>scrollThumbs</td>
+        <td>any number</td>
+        <td>1</td>
+        <td>number of thumbs to scroll when left/right buttons clicked</td>
+    </tr>
+    </table>
+
+    <p>Example:</p>
+    <pre>
+    $(document).ready(function(){
+        $('.thumbnailwrapper').thumbnailer({
+            zoom: 1,
+            captions: 1,
+            scrollThumbs: 1
+        });
+    });
+    </pre>
+
+
+</div>
+</body>
+</html>

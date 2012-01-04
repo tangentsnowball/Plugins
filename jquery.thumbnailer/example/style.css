@@ -1,0 +1,36 @@
+/* GENERAL STYLES FOR THE PAGE */
+body {padding:0px;margin:0px;font-size:0.8em;font-family:Arial,Verdana;color:#333333;background:silver;}
+div {padding:0px;margin:0px;}
+
+#pagewrapper {width:960px;margin:0px auto;background:#FFFFFF;}
+h1,h2,h3 {margin:0px;padding:5px 0px 5px 0px;}
+h1 {font-size:200%;font-weight:normal;}
+h2 {font-size:150%;color:#828282;font-weight:normal;}
+h3 {font-size:130%;}
+a,
+a:active,
+a:visited,
+a:hover {color:#003366;text-decoration:none;}
+a:hover {color:#660000;text-decoration:underline;}
+p {margin:0px;padding:4px 0px;}
+table {border-collapse:collapse;margin:10px 0px;}
+th, td {padding:3px 4px;font-size:90%;border:solid #cccccc 1px;text-align:center;}
+
+/* float clearing for IE6 */
+* html .clearfix{
+  height: 1%;
+  overflow: visible;
+}
+/* float clearing for IE7 */
+*+html .clearfix{
+  min-height: 1%;
+}
+/* float clearing for everyone else */
+.clearfix:after{
+  clear: both;
+  content: ".";
+  display: block;
+  height: 0;
+  visibility: hidden;
+  font-size: 0;
+}
