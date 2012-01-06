@@ -55,6 +55,7 @@ WORKINGS OF THE PLUGIN
 
 
 ASSUMPTIONS MADE BY THE PLUGIN
+==============================
 * the first thumbnail should be the current main image
 * thumbnails are beneath the main image (css highlight on clicked thumb is an arrow, pointing up)
 * vertically aligns and centres the new main image in the div, as well as the thumbnails. CSS MUST contain height and width for main image wrapper (.imagemain)
