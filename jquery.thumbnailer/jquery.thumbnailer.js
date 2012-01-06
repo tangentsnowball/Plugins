@@ -1,4 +1,5 @@
 //Generic thumbnail jquery plugin
+//last updated: 6/1/12
 //requires: jquery >= 1.4.4 and plugin stylesheet
 //by Andy Sellick, Tangent Snowball http://www.tangentsnowball.com/
 (function($){
@@ -108,8 +109,8 @@
         var marginleft = 0;
         var blockwidth = 0;
         var blockheight = 0;
-        var imagewidth = 0;
-        var imageheight = 0;
+        var imagewidth = 40;
+        var imageheight = 40;
 
         var imagethumbs = obj.find('.imagethumbs');
         var imagethumbsli = obj.find('.imagethumbs ul li');
@@ -302,10 +303,11 @@
                             $zoomdiv = $('<span/>',{
                                 'class':'zoomer'
                             }).css({
-                                'width': mainimage.width(),
-                                'height': mainimage.height(),
-                                'left': thisel.width() + 50,
-                                'top': mainimage.css('margin-top')
+                            /* changing these settings - current makes zoom fixed size, commented makes it same size as image */
+                            'width': thisel.width(),//mainimage.width(),
+                            'height': thisel.height(), //mainimage.height(),
+                            'left': thisel.width() + 50,
+                            'top': 0 //mainimage.css('margin-top')
                             }).appendTo(thisel);
 
                             var origwidth = mainimage.width();
@@ -322,8 +324,8 @@
                                     'class':'zoomlens'
                                 }).css({
                                     //set zoomlens to be the same percent size of the product image as the product image is of the zoomed image
-                                    'width': (origwidth / 100) * percentw,
-                                    'height': (origheight / 100) * percenth
+                                    'width': (mainimage.parent().width() / 100) * percentw,
+                                    'height': (mainimage.parent().height() / 100) * percenth
                                 }).hide().appendTo(thisel).fadeIn('600');
                                 positionZoomer($(this),e);
                             });

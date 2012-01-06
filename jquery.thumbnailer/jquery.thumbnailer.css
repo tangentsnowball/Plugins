@@ -1,6 +1,6 @@
 /* STYLES USED BY THE PLUGIN */
 .thumbnailwrapper {float:left;position:relative;}
-.imagemain {display:block;position:relative;cursor:default;height:330px;} /* setting height prevents movement issue when switching images - should be height of largest img */
+.imagemain {display:block;position:relative;cursor:default;text-decoration:none;height:330px;} /* setting height prevents movement issue when switching images - should be height of largest img */
 .imagemain img {border:0;}
 .imagethumbs {position:relative;}
 
@@ -47,6 +47,6 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#8cb7bd', end
 .imagemain .zoomlens {display:block;position:absolute;top:0px;left:0px;background:rgba(169,169,169,0.3);border:solid silver 1px;cursor:crosshair;} /* note that the plugin corrects for the existence of a border on this element, removing it will result in a gap */
 
 /* CAPTION */
-.caption {display:block;position:absolute;bottom:0px;left:0px;width:100%;padding:5px 0px;text-align:center;background:rgb(187,187,187);background:rgba(0,0,0,0.5);color:#FFFFFF;}
+.caption {display:block;position:absolute;bottom:0px;left:0px;width:100%;padding:5px 0px;text-align:center;background:rgb(187,187,187);background:rgba(0,0,0,0.5);color:#FFFFFF;text-decoration:none;}
 
 
