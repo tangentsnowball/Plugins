@@ -25,6 +25,8 @@ LATEST CHANGES
 ==============
 6/1/12
 ------
+* added option for positioning zoom over top of image
+* added option to always show caption if zoom set to inside
 * changed size of zoom popup to match image container, not image - zoom lens adjusted accordingly
 * set min width on thumbnails to allow for people using very narrow thumbs
 

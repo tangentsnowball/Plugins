@@ -9,7 +9,9 @@
     var defaults = {
         zoom: 0,
         captions: 0,
-        scrollThumbs: 1
+        scrollThumbs: 1,
+        zoomPos: 'outside',
+        captionShow: 0
     };
     var options = $.extend(defaults, options);
 
@@ -220,9 +222,12 @@
             
             if(options.captions){
                 var caption = $(this).find('img').attr('alt');
-                $('<span/>',{
+                var $captionel = $('<span/>',{
                     'class':'caption'
                 }).html(caption).hide().appendTo(imagemain).fadeIn('500');
+                if(options.captionShow){
+                    $captionel.css({'z-index':100});
+                }
             }
         }
 
@@ -299,16 +304,25 @@
                     if(!zoomer.length){
                         var mainimage = thisel.find('img');
                         var zoomback = thisel.get(0).href;
+                        var zoomerleft = thisel.width() + 50;
+                        if(options.zoomPos == 'inside'){
+                            zoomerleft = 0;
+                        }
                         if(zoomback){
                             $zoomdiv = $('<span/>',{
                                 'class':'zoomer'
                             }).css({
-                            /* changing these settings - current makes zoom fixed size, commented makes it same size as image */
-                            'width': thisel.width(),//mainimage.width(),
-                            'height': thisel.height(), //mainimage.height(),
-                            'left': thisel.width() + 50,
-                            'top': 0 //mainimage.css('margin-top')
+                                /* changing these settings - current makes zoom fixed size, commented makes it same size as image */
+                                'width': thisel.width(),//mainimage.width(),
+                                'height': thisel.height(), //mainimage.height(),
+                                'left': zoomerleft,
+                                'top': 0 //mainimage.css('margin-top')
                             }).appendTo(thisel);
+                            if(options.zoomPos == 'inside'){
+                                $zoomdiv.css({
+                                    'border':0
+                                });
+                            }
 
                             var origwidth = mainimage.width();
                             var origheight = mainimage.height();
@@ -326,7 +340,14 @@
                                     //set zoomlens to be the same percent size of the product image as the product image is of the zoomed image
                                     'width': (mainimage.parent().width() / 100) * percentw,
                                     'height': (mainimage.parent().height() / 100) * percenth
-                                }).hide().appendTo(thisel).fadeIn('600');
+                                }).hide(0,function(){
+                                    if(options.zoomPos == 'inside'){
+                                        $(this).css({
+                                            'border': 0,
+                                            'background':'none'
+                                        });
+                                    }
+                                }).appendTo(thisel).fadeIn('600');
                                 positionZoomer($(this),e);
                             });
                         }
@@ -344,8 +365,10 @@
             );
     
             obj.find('.zoomer').live('hover',function(){
-                $(this).parent().find('.zoomer').stop(false,true).fadeOut('500');
-                $(this).parent().find('.zoomlens').stop(false,true).fadeOut('500');
+                if(options.zoomPos != 'inside'){
+                    $(this).parent().find('.zoomer').stop(false,true).fadeOut('500');
+                    $(this).parent().find('.zoomlens').stop(false,true).fadeOut('500');
+                }
             });
     
             obj.find('.imagemain').mousemove(function(e){
