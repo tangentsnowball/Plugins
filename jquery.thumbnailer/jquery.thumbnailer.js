@@ -1,5 +1,5 @@
 //Generic thumbnail jquery plugin
-//last updated: 6/1/12
+//last updated: 13/3/12
 //requires: jquery >= 1.4.4 and plugin stylesheet
 //by Andy Sellick, Tangent Snowball http://www.tangentsnowball.com/
 (function($){
@@ -7,11 +7,12 @@
 
     //options
     var defaults = {
-        zoom: 0,
+        zoom: 1,
         captions: 0,
         scrollThumbs: 1,
         zoomPos: 'outside',
-        captionShow: 0
+        captionShow: 0,
+        zoomIndicator: 1
     };
     var options = $.extend(defaults, options);
 
@@ -30,12 +31,8 @@
                 $(mylist).animate({
                     left:move
                 },300,function(){
-                    if(move == 0) {
-                        thisel.removeClass('active');
-                    }
-                    else {
-                        thisel.addClass('active');
-                    }
+                    if(move == 0) { thisel.removeClass('active'); }
+                    else { thisel.addClass('active'); }
                 });
                 obj.find('.rightnavclick').addClass('active');
             }
@@ -48,12 +45,8 @@
                 $(mylist).animate({
                     left:goleft
                 },300,function(){
-                    if(result - blockwidth < 0){
-                        thisel.removeClass('active');
-                    }
-                    else {
-                        thisel.addClass('active');
-                    }
+                    if(result - blockwidth < 0){ thisel.removeClass('active'); }
+                    else { thisel.addClass('active'); }
                 });
                 obj.find('.leftnavclick').addClass('active');
             }
@@ -65,9 +58,9 @@
     function positionZoomer(thisel,e){
         var offsets = thisel.parent().offset();
         var zoomlens = thisel.find('.zoomlens');
-
-        var zoomlenstop = Math.min(Math.max(e.pageY - offsets.top - (zoomlens.height() / 2),0),(thisel.height() - zoomlens.height() - 2));
-        var zoomlensleft = Math.min(Math.max(e.pageX - offsets.left - (zoomlens.width() / 2),0),(thisel.width() - zoomlens.width() - 2));
+        //the minus 2 at the end is to account for the border on the zoom lens
+        var zoomlenstop = Math.min(Math.max(e.pageY - offsets.top - (zoomlens.height() / 2),0),(thisel.height() - zoomlens.height() - 2 ));
+        var zoomlensleft = Math.min(Math.max(e.pageX - offsets.left - (zoomlens.width() / 2),0),(thisel.width() - zoomlens.width() - 2 ));
 
         zoomlens.css({
             'top': zoomlenstop,
@@ -75,23 +68,24 @@
         });
         var zoomer = thisel.find('.zoomer');
         var zoomimg = zoomer.find('img');
+        var origimg = thisel.find('img');
 
         var zoomwidth = zoomimg.width();
         var zoomheight = zoomimg.height();
-        var origimg = thisel.find('img');
         var origwidth = origimg.width();
         var origheight = origimg.height();
+
         //work out the percentage size diff between product image and full size image
-        var percentw = (origwidth / zoomwidth) * 100;
-        var percenth = (origheight / zoomheight) * 100;
+        var percentw = Math.floor((origwidth / zoomwidth) * 100);
+        var percenth = Math.floor((origheight / zoomheight) * 100);
 
         //now multiply up the zoom position based on the above
         var zoomimgtop = (zoomlenstop / percentw) * 100;
         var zoomimgleft = (zoomlensleft / percenth) * 100;
-        
+
         //now work out the automatically applied margin and adjust accordingly
-        var margintop = parseInt(origimg.css('margin-top'));
-        var marginleft = parseInt(origimg.css('margin-left'));
+        var margintop = parseInt(origimg.css('margin-top'));//.replace('px','');
+        var marginleft = parseInt(origimg.css('margin-left'));//.replace('px','');
         margintop = (margintop / percenth) * 100;
         marginleft = (marginleft / percentw) * 100;
         zoomimgtop = zoomimgtop - margintop;
@@ -102,32 +96,49 @@
             'left': -zoomimgleft
         });
     }
+    
+    //given an image, apply some margin to the top and left to centre it within the space it occupies
+    function centreImage(thisimg){
+        var imgwidth = thisimg.width();
+        var imgheight = thisimg.height();
+
+        var parentel = thisimg.parent();
+        var parentwidth = parentel.width();
+        var parentheight = parentel.height();
+
+        var marginleft = 0;
+        var margintop = 0;
+
+        if(imgwidth < parentwidth){ marginleft = Math.floor((parentwidth - imgwidth) / 2); } //first work out left margin
+        if(imgheight < parentheight){ margintop = Math.floor((parentheight - imgheight) / 2); } //now top margin
+
+        thisimg.css({   'margin-left':marginleft + 'px',
+                        'margin-top':margintop + 'px'
+        });
+    }
+
+
 
     /* generic stuff here */
     return this.each(function() {
         var obj = $(this);
 
-        var margintop = 0;
-        var marginleft = 0;
         var blockwidth = 0;
         var blockheight = 0;
-        var imagewidth = 40;
-        var imageheight = 40;
+        var imagewidth = 0;
+        var imageheight = 0;
 
         var imagethumbs = obj.find('.imagethumbs');
         var imagethumbsli = obj.find('.imagethumbs ul li');
         var imagethumbslilength = imagethumbsli.length;
+
         //if there are multiple thumbnails then do clever stuff
         if(imagethumbslilength){
             var numblocks = imagethumbsli.length; //find number of list items
             //find the thumbs ul and wrap it in a specific div, add some styles and add the navigation controls
             var $thumbwrapper = $('<div/>',{ 'class': 'thumbwrapper' });
-            var $leftnav = $('<div/>',{
-                'class': 'leftnavclick nav'
-            }).html('<span></span>');
-            var $rightnav = $('<div/>',{
-                'class': 'rightnavclick nav active'
-            }).html('<span></span>');
+            var $leftnav = $('<div/>',{ 'class': 'leftnavclick nav' }).html('<span></span>');
+            var $rightnav = $('<div/>',{ 'class': 'rightnavclick nav active' }).html('<span></span>');
             var $imagethumbscontents = imagethumbs.html();
             $thumbwrapper.append($imagethumbscontents);
             var thumbwrapperul = obj.find('.thumbwrapper ul');
@@ -148,8 +159,12 @@
                         'height':imageheight
                     });
                     //find the dimensions of the largest li
-                    blockwidth = Math.max(blockwidth, parseFloat(thisel.outerWidth(true)));
-                    blockheight = Math.max(blockheight, parseFloat(thisel.outerHeight(true)));
+                    //there's a problem with this - if we use the li width to work out the li block size, it doesn't work - because 
+                    //this all happens before we set the block size to be equal for all blocks based on the max image size.
+                    //slightly hacking this to fix, ordinarily we'd be cleverer with working out the image margin,
+                    //rather than just putting a known value of 16 in
+                    blockwidth = Math.max(blockwidth, imagewidth + 16);
+                    blockheight = Math.max(blockheight, imageheight + 16);
 
                     //on the last element, do the rest of the stuff
                     if(index == imagethumbslilength - 1){
@@ -172,25 +187,8 @@
                         $thumbwrapper.height(imageheight + 20); //would set this to blockheight but there's an odd bug where it comes out too big
 
                         imagethumbs.find('a').each(function(){
-                            var thisimg = $(this).find('img');
-                            //centre align the thumbnail, first work out left margin
-                            var marginleft = 0;
-                            var thumbwidth = thisimg.width();
-                            if(thumbwidth < imagewidth){
-                                marginleft = (imagewidth - thumbwidth) / 2;
-                            }
-                            //now top margin
-                            var margintop = 0;
-                            var thumbheight = thisimg.height();
-                            if(thumbheight < imageheight){
-                                margintop = (imageheight - thumbheight) / 2;
-                            }
-
-                            thisimg.css({
-                                'margin-left':marginleft,
-                                'margin-top':margintop
-                            });
                             $(this).height(imageheight).width(imagewidth);
+                            centreImage($(this).find('img'));
                         });
                         //finally, add the active class to the first thumbnail
                         obj.find('.thumbwrapper ul li:first').addClass('active');
@@ -199,9 +197,6 @@
             });
 
             var imagemain = obj.find('.imagemain');
-            obj.css({
-                'width':275
-            });
             var containerwidth = imagemain.width();
             var containerheight = imagemain.height();
 
@@ -212,12 +207,8 @@
             //hit 'back', the code below doesn't fire UNLESS we do the slightly odd src attr swap below.
             var tempsrc = imagemain.find('img').attr('src');
             imagemain.find('img').attr("src",'').attr("src",tempsrc).load(function(data){
-                if($(this).width() < containerwidth){
-                    $(this).css('margin-left',(containerwidth - $(this).width()) / 2);
-                }
-                if($(this).height() < containerheight){
-                    $(this).css('margin-top',(containerheight - $(this).height()) / 2);
-                }
+                centreImage($(this));
+                imagemain.addClass('ready');
             });
             
             if(options.captions){
@@ -228,6 +219,13 @@
                 if(options.captionShow){
                     $captionel.css({'z-index':100});
                 }
+            }
+            
+            if(options.zoomIndicator){
+                //add 'you can zoom' element
+                $('<div/>',{
+                    'class':'zoomindicator'
+                }).prependTo(imagemain);
             }
         }
 
@@ -298,72 +296,81 @@
             //do the zoom
             obj.find('.imagemain').hover(
                 function(e){ //onmouseover
-                    var thisel = $(this);
-                    var zoomer = thisel.find('.zoomer');
-                    //if the elements don't exist then create them
-                    if(!zoomer.length){
-                        var mainimage = thisel.find('img');
-                        var zoomback = thisel.get(0).href;
-                        var zoomerleft = thisel.width() + 50;
-                        if(options.zoomPos == 'inside'){
-                            zoomerleft = 0;
+                    if($(this).hasClass('ready')){
+                        var thisel = $(this);
+                        if(options.zoomIndicator){
+                            thisel.find('.zoomindicator').clearQueue().delay(250).fadeOut(150);
                         }
-                        if(zoomback){
-                            $zoomdiv = $('<span/>',{
-                                'class':'zoomer'
-                            }).css({
-                                /* changing these settings - current makes zoom fixed size, commented makes it same size as image */
-                                'width': thisel.width(),//mainimage.width(),
-                                'height': thisel.height(), //mainimage.height(),
-                                'left': zoomerleft,
-                                'top': 0 //mainimage.css('margin-top')
-                            }).appendTo(thisel);
+                        var zoomer = thisel.find('.zoomer');
+                        //if the elements don't exist then create them
+                        if(!zoomer.length){
+                            var mainimage = thisel.find('img');
+                            var zoomback = thisel.get(0).href;
+                            var zoomerleft = thisel.width() + 50;
                             if(options.zoomPos == 'inside'){
-                                $zoomdiv.css({
-                                    'border':0
+                                zoomerleft = 0;
+                            }
+                            if(zoomback){
+                                $zoomdiv = $('<span/>',{
+                                    'class':'zoomer'
+                                }).css({
+                                    /* changing these settings - current makes zoom fixed size, commented makes it same size as image */
+                                    'width': thisel.width(),//mainimage.width(),
+                                    'height': thisel.height(), //mainimage.height(),
+                                    'left': zoomerleft,
+                                    'top': 0 //mainimage.css('margin-top')
+                                }).appendTo(thisel);
+                                if(options.zoomPos == 'inside'){
+                                    $zoomdiv.css({
+                                        'border':0
+                                    });
+                                }
+    
+                                var origwidth = mainimage.width();
+                                var origheight = mainimage.height();
+                
+                                $zoomedimg = $('<img/>',{
+                                    'src':zoomback
+                                }).hide().appendTo(thisel.find('.zoomer')).fadeIn('1000').load(function(){
+                                    var zoomwidth = $(this).width();
+                                    var zoomheight = $(this).height();
+                                    var percentw = (origwidth / zoomwidth) * 100; //the percentage size the regular image is of the zoomed, larger image
+                                    var percenth = (origheight / zoomheight) * 100;
+                                    $lens = $('<span/>',{
+                                        'class':'zoomlens'
+                                    }).css({
+                                        //set zoomlens to be the same percent size of the product image as the product image is of the zoomed image
+                                        'width': (mainimage.parent().width() / 100) * percentw,
+                                        'height': (mainimage.parent().height() / 100) * percenth
+                                    }).hide(0,function(){
+                                        if(options.zoomPos == 'inside'){
+                                            $(this).css({
+                                                'border': 0,
+                                                'background':'none'
+                                            });
+                                        }
+                                    }).appendTo(thisel).fadeIn('600');
+                                    positionZoomer($(this),e);
                                 });
                             }
-
-                            var origwidth = mainimage.width();
-                            var origheight = mainimage.height();
-            
-                            $zoomedimg = $('<img/>',{
-                                'src':zoomback
-                            }).hide().appendTo(thisel.find('.zoomer')).fadeIn('1000').load(function(){
-                                var zoomwidth = $(this).width();
-                                var zoomheight = $(this).height();
-                                var percentw = (origwidth / zoomwidth) * 100; //the percentage size the regular image is of the zoomed, larger image
-                                var percenth = (origheight / zoomheight) * 100;
-                                $lens = $('<span/>',{
-                                    'class':'zoomlens'
-                                }).css({
-                                    //set zoomlens to be the same percent size of the product image as the product image is of the zoomed image
-                                    'width': (mainimage.parent().width() / 100) * percentw,
-                                    'height': (mainimage.parent().height() / 100) * percenth
-                                }).hide(0,function(){
-                                    if(options.zoomPos == 'inside'){
-                                        $(this).css({
-                                            'border': 0,
-                                            'background':'none'
-                                        });
-                                    }
-                                }).appendTo(thisel).fadeIn('600');
-                                positionZoomer($(this),e);
-                            });
                         }
-                    }
-                    //otherwise just find and show the existing elements
-                    else {
-                        $(this).find('.zoomer').stop(false,true).fadeIn('1000');
-                        $(this).find('.zoomlens').stop(false,true).fadeIn('600');
+                        //otherwise just find and show the existing elements
+                        else {
+                            $(this).find('.zoomer').stop(false,true).fadeIn('1000');
+                            $(this).find('.zoomlens').stop(false,true).fadeIn('600');
+                        }
                     }
                 },
                 function(){ //onmouseout
                     $(this).find('.zoomer').stop(false,true).fadeOut('500');
                     $(this).find('.zoomlens').stop(false,true).fadeOut('500');
+                    if(options.zoomIndicator){
+                        $(this).find('.zoomindicator').clearQueue().delay(250).fadeIn(150);
+                    }
+                    
                 }
             );
-    
+
             obj.find('.zoomer').live('hover',function(){
                 if(options.zoomPos != 'inside'){
                     $(this).parent().find('.zoomer').stop(false,true).fadeOut('500');

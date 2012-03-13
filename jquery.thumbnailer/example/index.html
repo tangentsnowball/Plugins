@@ -7,7 +7,7 @@
 
   <link rel="stylesheet" type="text/css" href="../jquery.thumbnailer.css"/>
   <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-  <script type="text/javascript" src="../jquery.thumbnailer.js"></script>
+  <script type="text/javascript" src="../jquery.thumbnailer.min.js"></script>
   <script type="text/javascript">
   <!--
     $(document).ready(function(){
@@ -41,58 +41,8 @@
     </div>
 
     <h1>jquery thumbnail plugin example page</h1>
-    <p>Make sure to read the integration instructions. Here's <a href="javascript:var%20firebug=document.createElement('script');firebug.setAttribute('src','http://getfirebug.com/releases/lite/1.2/firebug-lite-compressed.js');document.body.appendChild(firebug);(function(){if(window.firebug.version){firebug.init();}else{setTimeout(arguments.callee);}})();void(firebug);">Firebug</a> in case you need it.</p>
-    <p>Options for the plugin are:</p>
+    <p>Make sure to read the <a href="https://github.com/tangentsnowball/Plugins/tree/master/jquery.thumbnailer">integration instructions</a>. Here's <a href="javascript:var%20firebug=document.createElement('script');firebug.setAttribute('src','http://getfirebug.com/releases/lite/1.2/firebug-lite-compressed.js');document.body.appendChild(firebug);(function(){if(window.firebug.version){firebug.init();}else{setTimeout(arguments.callee);}})();void(firebug);">Firebug</a> in case you need it.</p>
 
-    <table>
-    <tr>
-        <th>Option</th>
-        <th>Values</th>
-        <th>Default</th>
-        <th>Desc</th>
-    </tr>
-    <tr>
-        <td>zoom</td>
-        <td>0 (off), 1 (on)</td>
-        <td>off</td>
-        <td>enables the zoom when mouse hover on main image</td>
-    </tr>
-    <tr>
-        <td>zoomPos</td>
-        <td>inside</td>
-        <td>outside</td>
-        <td>if specified, positions the zoom within i.e. on top of the image that is zoomed</td>
-    </tr>
-    <tr>
-        <td>captions</td>
-        <td>0 (off), 1 (on)</td>
-        <td>off</td>
-        <td>enables captions on main image</td>
-    </tr>
-    <tr>
-        <td>captionShow</td>
-        <td>0 (off), 1 (on)</td>
-        <td>off</td>
-        <td>when on, ensures image caption is shown even if zoomPos is set to inside</td>
-    </tr>
-    <tr>
-        <td>scrollThumbs</td>
-        <td>any number</td>
-        <td>1</td>
-        <td>number of thumbs to scroll when left/right buttons clicked</td>
-    </tr>
-    </table>
-
-    <p>Example:</p>
-    <pre>
-    $(document).ready(function(){
-        $('.thumbnailwrapper').thumbnailer({
-            zoom: 1,
-            captions: 1,
-            scrollThumbs: 1
-        });
-    });
-    </pre>
 
 
 </div>

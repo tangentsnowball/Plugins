@@ -6,23 +6,28 @@ Jquery plugin to handle thumbnail navigation and image swapping. Includes option
 
 Compatible with Firefox, Safari, Chrome, and IE6+.
 
-Markup should look like this:
+See included example for markup.
 
-    <div class="thumbnailwrapper">
-        <a class="imagemain" href="images/product1_large.jpg">
-            <img src="images/product1.jpg" alt="Image caption"/>
-        </a>
-        <div class="imagethumbs">
-            <ul>
-                <li><a href="images/product1_large.jpg" rel="images/product1_medium.jpg"><img src="images/product1_thumb.gif" alt="Image caption"/></a></li>
-                <li><a href="images/product2_large.jpg" rel="images/product2_medium.jpg"><img src="images/product2_thumb.gif" alt="Image caption"/></a></li>
-            </ul>
-        </div>
-    </div>
+OPTIONS
+=======
 
+    OPTION          VALUES          DEFAULT     DESC
+    zoom            0 (off) 1 (on)  on         enables the zoom when mouse hover on main image
+    zoomPos         inside          outside     if specified, positions the zoom within i.e. on top of the image that is zoomed
+    captions        0 (off) 1 (on)  off         enables captions on main image
+    captionShow     0 (off) 1 (on)  off         when on, ensures image caption is shown even if zoomPos is set to inside
+    scrollThumbs    any number      1           number of thumbs to scroll when left/right buttons clicked
+    zoomIndicator   0 (off) 1 (on)  1           shows an icon on the zoomable image to indicate zoom is possible
 
 LATEST CHANGES
 ==============
+13/3/12
+-------
+* fix for bug with block width/image width
+* added optional zoom indicator icon
+* fixed bug to prevent hover until image ready
+* moved width setting of wrapper from plugin to stylesheet
+
 6/1/12
 ------
 * added option for positioning zoom over top of image
@@ -59,5 +64,6 @@ WORKINGS OF THE PLUGIN
 ASSUMPTIONS MADE BY THE PLUGIN
 ==============================
 * the first thumbnail should be the current main image
+* the three image sizes (full, medium and thumbnail) should all be based off the same initial image, just reduced in size
 * thumbnails are beneath the main image (css highlight on clicked thumb is an arrow, pointing up)
 * vertically aligns and centres the new main image in the div, as well as the thumbnails. CSS MUST contain height and width for main image wrapper (.imagemain)
