@@ -10,6 +10,7 @@ See included example for markup.
 
 OPTIONS
 =======
+Options are::
 
     OPTION          VALUES          DEFAULT     DESC
     zoom            0 (off) 1 (on)  on         enables the zoom when mouse hover on main image
@@ -18,6 +19,7 @@ OPTIONS
     captionShow     0 (off) 1 (on)  off         when on, ensures image caption is shown even if zoomPos is set to inside
     scrollThumbs    any number      1           number of thumbs to scroll when left/right buttons clicked
     zoomIndicator   0 (off) 1 (on)  1           shows an icon on the zoomable image to indicate zoom is possible
+
 
 LATEST CHANGES
 ==============
