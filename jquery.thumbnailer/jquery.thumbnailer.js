@@ -1,5 +1,5 @@
 //Generic thumbnail jquery plugin
-//last updated: 13/3/12
+//last updated: 23/3/12
 //requires: jquery >= 1.4.4 and plugin stylesheet
 //by Andy Sellick, Tangent Snowball http://www.tangentsnowball.com/
 (function($){
@@ -350,7 +350,7 @@
                                             });
                                         }
                                     }).appendTo(thisel).fadeIn('600');
-                                    positionZoomer($(this),e);
+                                    positionZoomer(thisel,e);
                                 });
                             }
                         }
@@ -367,17 +367,19 @@
                     if(options.zoomIndicator){
                         $(this).find('.zoomindicator').clearQueue().delay(250).fadeIn(150);
                     }
-                    
+
                 }
             );
 
+            //since the zoomer is part of the element that triggers the hover, we need to manually remove it if the
+            //user hovers quickly enough out of the main area and over the zoom
             obj.find('.zoomer').live('hover',function(){
                 if(options.zoomPos != 'inside'){
                     $(this).parent().find('.zoomer').stop(false,true).fadeOut('500');
                     $(this).parent().find('.zoomlens').stop(false,true).fadeOut('500');
                 }
             });
-    
+
             obj.find('.imagemain').mousemove(function(e){
                 positionZoomer($(this),e);
             });

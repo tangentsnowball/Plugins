@@ -23,6 +23,10 @@ Options are::
 
 LATEST CHANGES
 ==============
+23/3/12
+-------
+* fix for zoomlens not positioning correctly on first mouseover
+
 13/3/12
 -------
 * fix for bug with block width/image width
