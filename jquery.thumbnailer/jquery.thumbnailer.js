@@ -1,5 +1,6 @@
 //Generic thumbnail jquery plugin
-//last updated: 23/3/12
+//https://github.com/tangentsnowball/Plugins/tree/master/jquery.thumbnailer
+//last updated: 18/7/12
 //requires: jquery >= 1.4.4 and plugin stylesheet
 //by Andy Sellick, Tangent Snowball http://www.tangentsnowball.com/
 (function($){
@@ -12,7 +13,8 @@
         scrollThumbs: 1,
         zoomPos: 'outside',
         captionShow: 0,
-        zoomIndicator: 1
+        zoomIndicator: 1,
+        zoomLocation: 'right'
     };
     var options = $.extend(defaults, options);
 
@@ -210,7 +212,7 @@
                 centreImage($(this));
                 imagemain.addClass('ready');
             });
-            
+
             if(options.captions){
                 var caption = $(this).find('img').attr('alt');
                 var $captionel = $('<span/>',{
@@ -245,6 +247,7 @@
                 imagewrapper.find('.zoomer').remove();
                 imagewrapper.find('.zoomlens').remove();
                 imagewrapper.attr('href',newzoomimage);
+                imagewrapper.removeClass('ready');
 
                 //now centre the big image vertically and horizontally in the block if needed
                 bigimage.attr("src",'').attr("src",newimage).load(function(){
@@ -299,7 +302,7 @@
                     if($(this).hasClass('ready')){
                         var thisel = $(this);
                         if(options.zoomIndicator){
-                            thisel.find('.zoomindicator').clearQueue().delay(250).fadeOut(150);
+                            thisel.find('.zoomindicator').stop(true,true).delay(150).fadeOut(150);
                         }
                         var zoomer = thisel.find('.zoomer');
                         //if the elements don't exist then create them
@@ -309,6 +312,9 @@
                             var zoomerleft = thisel.width() + 50;
                             if(options.zoomPos == 'inside'){
                                 zoomerleft = 0;
+                            }
+                            if(options.zoomLocation == 'left'){ //option to position zoom to the left of the image
+                                zoomerleft = -zoomerleft;
                             }
                             if(zoomback){
                                 $zoomdiv = $('<span/>',{
@@ -365,7 +371,7 @@
                     $(this).find('.zoomer').stop(false,true).fadeOut('500');
                     $(this).find('.zoomlens').stop(false,true).fadeOut('500');
                     if(options.zoomIndicator){
-                        $(this).find('.zoomindicator').clearQueue().delay(250).fadeIn(150);
+                        $(this).find('.zoomindicator').stop(true,true).delay(150).fadeIn(150);
                     }
 
                 }

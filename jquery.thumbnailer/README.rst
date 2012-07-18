@@ -2,7 +2,7 @@
 THUMBNAIL PLUGIN
 ================
 
-Jquery plugin to handle thumbnail navigation and image swapping. Includes optional zoom option for main image and optional image captions. Options are detailed in the included example page.
+Jquery plugin to handle thumbnail navigation and image swapping. Includes optional zoom option for main image and optional image captions, plus automatic image and thumbnail central positioning.
 
 Compatible with Firefox, Safari, Chrome, and IE6+.
 
@@ -19,10 +19,17 @@ Options are::
     captionShow     0 (off) 1 (on)  off         when on, ensures image caption is shown even if zoomPos is set to inside
     scrollThumbs    any number      1           number of thumbs to scroll when left/right buttons clicked
     zoomIndicator   0 (off) 1 (on)  1           shows an icon on the zoomable image to indicate zoom is possible
+    zoomLocation    left            right       Positions the zoom either side of the image being zoomed
 
 
 LATEST CHANGES
 ==============
+18/7/12
+-------
+* Added zoomLocation option
+* Fixed bug with zoomindicator getting stuck after frantic mouseon/mouseoff
+* (probably) Fixed bug with zoomlens being wrong size after switching thumbnails and trying to zoom before main image fully loaded
+
 23/3/12
 -------
 * fix for zoomlens not positioning correctly on first mouseover
