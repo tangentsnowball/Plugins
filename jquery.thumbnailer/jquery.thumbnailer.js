@@ -135,8 +135,8 @@
         var imagethumbslilength = imagethumbsli.length;
 
         //if there are multiple thumbnails then do clever stuff
-        if(imagethumbslilength){
-            var numblocks = imagethumbsli.length; //find number of list items
+        if(imagethumbslilength > 0){
+            var numblocks = imagethumbslilength; //find number of list items
             //find the thumbs ul and wrap it in a specific div, add some styles and add the navigation controls
             var $thumbwrapper = $('<div/>',{ 'class': 'thumbwrapper' });
             var $leftnav = $('<div/>',{ 'class': 'leftnavclick nav' }).html('<span></span>');
@@ -197,38 +197,38 @@
                     }
                 }).appendTo($(this));
             });
+        }
 
-            var imagemain = obj.find('.imagemain');
-            var containerwidth = imagemain.width();
-            var containerheight = imagemain.height();
+        var imagemain = obj.find('.imagemain');
+        var containerwidth = imagemain.width();
+        var containerheight = imagemain.height();
 
-            //centre align the initial main image
-            //webkit browsers have problems with images and knowing their dimensions prior to them being loaded
-            //however it turns out they also have a problem when using 'back' as the image is already loaded/cached
-            //put simply, this all works, but if you're in e.g. chrome and load this, go to another page, then
-            //hit 'back', the code below doesn't fire UNLESS we do the slightly odd src attr swap below.
-            var tempsrc = imagemain.find('img').attr('src');
-            imagemain.find('img').attr("src",'').attr("src",tempsrc).load(function(data){
-                centreImage($(this));
-                imagemain.addClass('ready');
-            });
+        //centre align the initial main image
+        //webkit browsers have problems with images and knowing their dimensions prior to them being loaded
+        //however it turns out they also have a problem when using 'back' as the image is already loaded/cached
+        //put simply, this all works, but if you're in e.g. chrome and load this, go to another page, then
+        //hit 'back', the code below doesn't fire UNLESS we do the slightly odd src attr swap below.
+        var tempsrc = imagemain.find('img').attr('src');
+        imagemain.find('img').attr("src",'').attr("src",tempsrc).load(function(data){
+            centreImage($(this));
+            imagemain.addClass('ready');
+        });
 
-            if(options.captions){
-                var caption = $(this).find('img').attr('alt');
-                var $captionel = $('<span/>',{
-                    'class':'caption'
-                }).html(caption).hide().appendTo(imagemain).fadeIn('500');
-                if(options.captionShow){
-                    $captionel.css({'z-index':100});
-                }
+        if(options.captions){
+            var caption = $(this).find('img').attr('alt');
+            var $captionel = $('<span/>',{
+                'class':'caption'
+            }).html(caption).hide().appendTo(imagemain).fadeIn('500');
+            if(options.captionShow){
+                $captionel.css({'z-index':100});
             }
-            
-            if(options.zoomIndicator){
-                //add 'you can zoom' element
-                $('<div/>',{
-                    'class':'zoomindicator'
-                }).prependTo(imagemain);
-            }
+        }
+        
+        if(options.zoomIndicator){
+            //add 'you can zoom' element
+            $('<div/>',{
+                'class':'zoomindicator'
+            }).prependTo(imagemain);
         }
 
         //switch main image for thumbnail clicked

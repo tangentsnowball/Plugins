@@ -13,7 +13,7 @@ OPTIONS
 Options are::
 
     OPTION          VALUES          DEFAULT     DESC
-    zoom            0 (off) 1 (on)  on         enables the zoom when mouse hover on main image
+    zoom            0 (off) 1 (on)  on          enables the zoom when mouse hover on main image
     zoomPos         inside          outside     if specified, positions the zoom within i.e. on top of the image that is zoomed
     captions        0 (off) 1 (on)  off         enables captions on main image
     captionShow     0 (off) 1 (on)  off         when on, ensures image caption is shown even if zoomPos is set to inside
@@ -28,7 +28,8 @@ LATEST CHANGES
 -------
 * Added zoomLocation option
 * Fixed bug with zoomindicator getting stuck after frantic mouseon/mouseoff
-* (probably) Fixed bug with zoomlens being wrong size after switching thumbnails and trying to zoom before main image fully loaded
+* Fixed bug with zoomlens being wrong size after switching thumbnails and trying to zoom before main image fully loaded
+* Fixed bug where if no thumbnails, zoomer did not work (d'oh)
 
 23/3/12
 -------
