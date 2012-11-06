@@ -20,10 +20,17 @@ Options are::
     scrollThumbs    any number      1           number of thumbs to scroll when left/right buttons clicked
     zoomIndicator   0 (off) 1 (on)  1           shows an icon on the zoomable image to indicate zoom is possible
     zoomLocation    left            right       Positions the zoom either side of the image being zoomed
+    thumbMinWidth   number          40          Minimum space (width) that thumbnails should occupy. Will be larger if thumbnails are larger.
+    thumbMinHeight  number          40          Minimum space (height) that thumbnails should occupy.
 
 
 LATEST CHANGES
 ==============
+6/11/12
+-------
+* Fixed bug with thumbnail sizes where if thumbnails were too narrow their size collapsed
+* Added thumbMinWidth and thumbMinHeight options
+
 18/7/12
 -------
 * Added zoomLocation option

@@ -1,6 +1,6 @@
 //Generic thumbnail jquery plugin
 //https://github.com/tangentsnowball/Plugins/tree/master/jquery.thumbnailer
-//last updated: 18/7/12
+//last updated: 6/11/12
 //requires: jquery >= 1.4.4 and plugin stylesheet
 //by Andy Sellick, Tangent Snowball http://www.tangentsnowball.com/
 (function($){
@@ -14,7 +14,9 @@
         zoomPos: 'outside',
         captionShow: 0,
         zoomIndicator: 1,
-        zoomLocation: 'right'
+        zoomLocation: 'right',
+        thumbMinWidth: 40, //set these values as the minimum thumbnail width and height you require
+        thumbMinHeight: 40
     };
     var options = $.extend(defaults, options);
 
@@ -127,8 +129,8 @@
 
         var blockwidth = 0;
         var blockheight = 0;
-        var imagewidth = 0;
-        var imageheight = 0;
+        var imagewidth = options.thumbMinWidth;
+        var imageheight = options.thumbMinHeight;
 
         var imagethumbs = obj.find('.imagethumbs');
         var imagethumbsli = obj.find('.imagethumbs ul li');
